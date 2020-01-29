@@ -4,7 +4,7 @@ import Home from '../../pages/Home/Home';
 
 const HomeContainer = connect(
   state => ({
-    rooms: state.rooms,
+    rooms: state.rooms.rooms,
   })
 )(Home);
 
