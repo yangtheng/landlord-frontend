@@ -1,14 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import {
-  Home,
-} from './pages';
+// import {
+//   HomeContainer,
+// } from './containers';
+import HomeContainer from './containers/HomeContainer';
 
 const Routes = () => (
   <Router>
     <Switch>
-      <Route path="/" component={Home} />
+      <Route path="/" component={HomeContainer} />
     </Switch>
   </Router>
 );

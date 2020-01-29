@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { socket } from '../../socket';
 
-const Home = () => (
-  <div>
-    CRA Boilerplate created by YT
-  </div>
-);
+const Home = ({ dispatch }) => {
+  return (
+    <div>
+      <button>create room</button>
+    </div>
+  );
+}
 
 export default Home;
