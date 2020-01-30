@@ -31,7 +31,7 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         ...{
-          users: action.users(),
+          users: action.users,
         },
       };
     case REC_CREATOR_JOIN:
@@ -74,9 +74,13 @@ export const recUserLeave = users => ({
 });
 
 export const userJoin = (user, roomId) => {
-  reqUserJoin(user, roomId);
+  return dispatch => {
+    dispatch(reqUserJoin(user, roomId));
+  }
 }
 
 export const userLeave = () => {
-  reqUserLeave();
+  return dispatch => {
+    dispatch(reqUserLeave());
+  };
 }

@@ -1,5 +1,5 @@
 const REQ_CREATE_ROOM = 'roomInfo/REQ_CREATE_ROOM';
-const REC_CREATE_ROOM = 'roomInfo/REC_CREATE_ROOM';
+const REC_GET_ROOMS = 'roomInfo/REC_GET_ROOMS';
 
 const defaultState = {
   rooms: [],
@@ -7,7 +7,7 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case REC_CREATE_ROOM:
+    case REC_GET_ROOMS:
       return {
         rooms: action.rooms,
       };

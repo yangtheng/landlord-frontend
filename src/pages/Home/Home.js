@@ -1,30 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { socket } from '../../socket';
+import { NavLink } from 'react-router-dom';
 
-const Home = ({ dispatch, rooms }) => {
+import './Home.scss';
+
+
+const Home = ({ userJoin, rooms }) => {
   const [userName, setUserName] = useState('');
 
-  useEffect(() => {
-    socket.on('reduxActionReceived', action => {
-      dispatch(action);
-    })
-  }, []);
-
   return (
-    <div>
-      <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} />
-      <button
+    <div className="home">
+      <label>Your Name:</label>
+      <input
+        type="text"
+        value={userName}
+        onChange={(e) => setUserName(e.target.value)}
+        placeholder="input name"
+      />
+      <NavLink
         onClick={() => socket.emit('createRoom', userName)}
+        to="/room"
       >
-        create room
-      </button>
+        <button>
+          create room
+        </button>
+      </NavLink>
+      <p>All Rooms</p>
       <ul>
         {rooms.map(room => (
           <li key={room.roomId}>
-            {room.roomId}
-            <button>
-              join room
-            </button>
+            <span className="room-list-room-id">{room.roomId}</span>
+            <span className="room-list-room-size">{room.users.length} / 3</span>
+            <NavLink
+              onClick={() => {
+                userJoin(userName, room.roomId);
+                socket.emit('joinRoom', {
+                  user: userName,
+                  roomId: room.roomId,
+                });
+              }}
+              to="/room"
+            >
+              <button>
+                join room
+              </button>
+            </NavLink>
           </li>
         ))}
       </ul>

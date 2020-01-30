@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import store from './redux/store';
 import { ScrollToTop } from './components';
-import App from './pages/App/App';
+import AppContainer from './containers/AppContainer';
 
 import './index.scss';
 
@@ -13,7 +13,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <ScrollToTop>
-        <App />
+        <AppContainer />
       </ScrollToTop>
     </Router>
   </Provider>,
