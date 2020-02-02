@@ -29,6 +29,10 @@ const Room = ({
         </button>
       </NavLink>
       {users.length === 3 && <NavLink
+        onClick={() => {
+          socket.emit('startGame', users);
+          // startGame();
+        }}
         to="/game"
       >
         <button>
