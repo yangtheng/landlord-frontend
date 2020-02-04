@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { socket } from '../../socket';
+import PlayerInfo from '../../components/PlayerInfo';
+import CardsOnBoard from '../../components/CardsOnBoard';
 
 import './styles.scss';
 
-const Game = ({
-  myCards,
-  activePlayer,
-  currentBid,
-  playersBidded,
-  playerLastBid,
-  playerNum,
-  isBidding,
-  landlord,
-  numOfCards,
-  leftovers,
-  users,
-  roomId,
-}) => {
+const Game = (props) => {
+  const {
+    myCards,
+    activePlayer,
+    currentBid,
+    playersBidded,
+    playerLastBid,
+    playerNum,
+    isBidding,
+    landlord,
+    numOfCards,
+    leftovers,
+    cardsOnBoard,
+    users,
+    roomId,
+    playCards,
+  } = props;
   const [activeCards, setActiveCards] = useState([]);
   const [cardTypes, setCardTypes] = useState([]);
 
@@ -84,30 +89,13 @@ const Game = ({
           />
         ))}
       </div>
-      <div className="player-info">
-        <p>{playerNum !== null && users[playerNum].user}</p>
-        <p>
-          <img className="num-cards-indicator" src="images/back.svg" alt="card-back" />
-          {numOfCards[playerNum]}
-        </p>
-        {landlord !== null && landlord === playerNum && <div className="landlord-indicator">landlord</div>}
+      <div className="current-bid">
+        Current Bid: {currentBid}
       </div>
-      <div className="player-info left">
-        <p>{playerNum !== null && users[(playerNum + 1) % 3].user}</p>
-        <p>
-          <img className="num-cards-indicator" src="images/back.svg" alt="card-back" />
-          {numOfCards[(playerNum + 1) % 3]}
-        </p>
-        {landlord !== null && landlord === (playerNum + 1) % 3 && <div className="landlord-indicator">landlord</div>}
-      </div>
-      <div className="player-info right">
-        <p>{playerNum !== null && users[(playerNum + 2) % 3].user}</p>
-        <p>
-          <img className="num-cards-indicator" src="images/back.svg" alt="card-back" />
-          {numOfCards[(playerNum + 2) % 3]}
-        </p>
-        {landlord !== null && landlord === (playerNum + 2) % 3 && <div className="landlord-indicator">landlord</div>}
-      </div>
+      <PlayerInfo className="player-info" {...props} displayedPlayer={playerNum} />
+      <PlayerInfo className="player-info left" {...props} displayedPlayer={(playerNum + 1) % 3} />
+      <PlayerInfo className="player-info right" {...props} displayedPlayer={(playerNum + 2) % 3} />
+      <CardsOnBoard className="cards-on-board" cards={cardsOnBoard[playerNum] || []} />
       <div
         className="opp-cards left"
         style={{ height: `${numOfCards[(playerNum + 1) % 3] * 160.23 - (numOfCards[(playerNum + 1) % 3] - 1) * 150}px`}}
@@ -145,6 +133,30 @@ const Game = ({
           :
             <>
               <button onClick={() => setActiveCards([])}>Clear</button>
+              <button onClick={() => {
+                playCards(myCards.filter((card , i) => {
+                  let include = true;
+                  activeCards.forEach(index => {
+                    if (index === i) include = false;
+                  })
+                  return include;
+                }));
+
+                socket.emit('reduxActionSent', {
+                  type: 'game/REC_PLAY_CARDS',
+                  playerNum,
+                  cards: myCards.filter((card, i) => {
+                    let include = false;
+                    activeCards.forEach(index => {
+                      if (index === i) include = true;
+                    })
+                    return include;
+                  }),
+                  roomId,
+                })
+
+                setActiveCards([]);
+              }}>Submit</button>
             </>
           }
       </div>}

@@ -1,6 +1,8 @@
 const REC_START_GAME = 'game/REC_START_GAME';
 const REC_BID = 'game/REC_BID';
 const REC_BID_END = 'game/REC_BID_END';
+const REQ_PLAY_CARDS = 'game/REQ_PLAY_CARDS';
+const REC_PLAY_CARDS = 'game/REC_PLAY_CARDS';
 
 const defaultState = {
   myCards: [],
@@ -13,6 +15,7 @@ const defaultState = {
   landlord: null,
   numOfCards: [17, 17, 17],
   leftovers: [],
+  cardsOnBoard: [[], [], []],
 };
 
 const types = ['3','4','5','6','7','8','9','T','J','Q','K','A','2'];
@@ -68,7 +71,30 @@ export default (state = defaultState, action) => {
           ),
         },
       }
+      case REQ_PLAY_CARDS:
+        return {
+          ...state,
+          myCards: action.cards,
+        }
+      case REC_PLAY_CARDS:
+        return {
+          ...state,
+          activePlayer: (action.playerNum + 1) % 3,
+          numOfCards: state.numOfCards.map((num, i) => {
+            return i === action.playerNum ? num - action.cards.length : num;
+          }),
+          cardsOnBoard: state.cardsOnBoard.map((cards, i) => {
+            if (i === action.playerNum) return action.cards;
+            if (i === (action.playerNum + 1) % 3) return [];
+            return cards;
+          })
+        }
     default:
       return state;
   }
 };
+
+export const playCards = cards => ({
+  type: REQ_PLAY_CARDS,
+  cards,
+});
