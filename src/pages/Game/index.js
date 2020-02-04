@@ -96,6 +96,8 @@ const Game = (props) => {
       <PlayerInfo className="player-info left" {...props} displayedPlayer={(playerNum + 1) % 3} />
       <PlayerInfo className="player-info right" {...props} displayedPlayer={(playerNum + 2) % 3} />
       <CardsOnBoard className="cards-on-board" cards={cardsOnBoard[playerNum] || []} />
+      <CardsOnBoard className="cards-on-board left" cards={cardsOnBoard[(playerNum + 1) % 3] || []} />
+      <CardsOnBoard className="cards-on-board right" cards={cardsOnBoard[(playerNum + 2) % 3] || []} />
       <div
         className="opp-cards left"
         style={{ height: `${numOfCards[(playerNum + 1) % 3] * 160.23 - (numOfCards[(playerNum + 1) % 3] - 1) * 150}px`}}
@@ -157,6 +159,16 @@ const Game = (props) => {
 
                 setActiveCards([]);
               }}>Submit</button>
+              <button onClick={() => {
+                socket.emit('reduxActionSent', {
+                  type: 'game/REC_PLAY_CARDS',
+                  playerNum,
+                  cards: [],
+                  roomId,
+                })
+
+                setActiveCards([]);
+              }}>Pass</button>
             </>
           }
       </div>}

@@ -133,8 +133,21 @@
   display: flex;
   bottom: 180px;
 
+  &.left {
+    top: 50%;
+    transform: translateY(-50%);
+    left: 120px;
+  }
+
+  &.right {
+    top: 50%;
+    transform: translateY(-50%);
+    right: 120px;
+    left: auto;
+  }
+
   img {
-    width: 110px;
+    width: 80px;
     position: relative;
   }
 }
