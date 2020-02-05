@@ -18,6 +18,8 @@ const Game = (props) => {
     numOfCards,
     leftovers,
     cardsOnBoard,
+    leaderBoard,
+    endGame,
     users,
     roomId,
     playCards,
@@ -128,52 +130,68 @@ const Game = (props) => {
           />
         ))}
       </div>
-      {playerNum === activePlayer && <div className="game-buttons">
-          {isBidding ?
-            <>
-              <button onClick={() => bid()}>Pass</button>
-              {currentBid < 1 && <button onClick={() => bid(1)}>Bid 1</button>}
-              {currentBid < 2 && <button onClick={() => bid(2)}>Bid 2</button>}
-              <button onClick={() => bid(3)}>Bid 3</button>
-            </>
+      {(playerNum === activePlayer || endGame) && <div className="game-buttons">
+          {endGame ?
+            <button onClick={() => {
+              socket.emit('startGame', { users, roomId });
+            }}>New Game</button>
           :
-            <>
-              <button onClick={() => setActiveCards([])}>Clear</button>
-              <button onClick={() => {
-                playCards(myCards.filter((card , i) => {
-                  let include = true;
-                  activeCards.forEach(index => {
-                    if (index === i) include = false;
-                  })
-                  return include;
-                }));
-
-                socket.emit('reduxActionSent', {
-                  type: 'game/REC_PLAY_CARDS',
-                  playerNum,
-                  cards: myCards.filter((card, i) => {
-                    let include = false;
+            isBidding ?
+              <>
+                <button onClick={() => bid()}>Pass</button>
+                {currentBid < 1 && <button onClick={() => bid(1)}>Bid 1</button>}
+                {currentBid < 2 && <button onClick={() => bid(2)}>Bid 2</button>}
+                <button onClick={() => bid(3)}>Bid 3</button>
+              </>
+            :
+              <>
+                <button onClick={() => setActiveCards([])}>Clear</button>
+                <button onClick={() => {
+                  const remainingCards = myCards.filter((card , i) => {
+                    let include = true;
                     activeCards.forEach(index => {
-                      if (index === i) include = true;
+                      if (index === i) include = false;
                     })
                     return include;
-                  }),
-                  roomId,
-                })
+                  })
 
-                setActiveCards([]);
-              }}>Submit</button>
-              <button onClick={() => {
-                socket.emit('reduxActionSent', {
-                  type: 'game/REC_PLAY_CARDS',
-                  playerNum,
-                  cards: [],
-                  roomId,
-                })
+                  playCards(remainingCards);
 
-                setActiveCards([]);
-              }}>Pass</button>
-            </>
+                  socket.emit('reduxActionSent', {
+                    type: 'game/REC_PLAY_CARDS',
+                    playerNum,
+                    cards: myCards.filter((card, i) => {
+                      let include = false;
+                      activeCards.forEach(index => {
+                        if (index === i) include = true;
+                      })
+                      return include;
+                    }),
+                    roomId,
+                  })
+
+                  if (!remainingCards.length) {
+                    socket.emit('reduxActionSent', {
+                      type: 'game/REC_END_GAME',
+                      winningPlayer: playerNum,
+                      bet: currentBid,
+                      roomId,
+                    })
+                  }
+
+                  setActiveCards([]);
+                }}>Submit</button>
+                <button onClick={() => {
+                  socket.emit('reduxActionSent', {
+                    type: 'game/REC_PLAY_CARDS',
+                    playerNum,
+                    cards: [],
+                    roomId,
+                  })
+
+                  setActiveCards([]);
+                }}>Pass</button>
+              </>
           }
       </div>}
     </div>

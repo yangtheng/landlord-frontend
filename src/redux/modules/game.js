@@ -3,6 +3,7 @@ const REC_BID = 'game/REC_BID';
 const REC_BID_END = 'game/REC_BID_END';
 const REQ_PLAY_CARDS = 'game/REQ_PLAY_CARDS';
 const REC_PLAY_CARDS = 'game/REC_PLAY_CARDS';
+const REC_END_GAME = 'game/REC_END_GAME';
 
 const defaultState = {
   myCards: [],
@@ -16,6 +17,8 @@ const defaultState = {
   numOfCards: [17, 17, 17],
   leftovers: [],
   cardsOnBoard: [[], [], []],
+  leaderBoard:[0, 0, 0],
+  endGame: false,
 };
 
 const types = ['3','4','5','6','7','8','9','T','J','Q','K','A','2'];
@@ -37,10 +40,12 @@ export default (state = defaultState, action) => {
   switch (action.type) {
     case REC_START_GAME:
       return {
-        ...state,
+        ...defaultState,
+        leaderBoard: state.leaderBoard,
         myCards: action.myCards,
         activePlayer: action.activePlayer,
         playerNum: action.playerNum,
+        endGame: false,
       };
     case REC_BID:
       return {
@@ -87,6 +92,21 @@ export default (state = defaultState, action) => {
             if (i === action.playerNum) return action.cards;
             if (i === (action.playerNum + 1) % 3) return [];
             return cards;
+          })
+        }
+      case REC_END_GAME:
+        return {
+          ...state,
+          endGame: true,
+          activePlayer: null,
+          leaderBoard: state.leaderBoard.map((score, i) => {
+            if (i === state.landlord) {
+              if (i === action.winningPlayer) return score + action.bet * 2;
+              return score - action.bet * 2
+            } else {
+              if (i === action.winningPlayer) return score + action.bet;
+              return score - action.bet
+            }
           })
         }
     default:

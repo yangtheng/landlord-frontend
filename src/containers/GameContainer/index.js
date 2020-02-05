@@ -17,6 +17,8 @@ const GameContainer = connect(
     numOfCards: state.game.numOfCards,
     leftovers: state.game.leftovers,
     cardsOnBoard: state.game.cardsOnBoard,
+    leaderBoard: state.game.leaderBoard,
+    endGame: state.game.endGame,
     users: state.roomInfo.users,
     roomId: state.roomInfo.roomId,
   }),

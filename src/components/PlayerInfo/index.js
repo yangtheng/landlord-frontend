@@ -8,6 +8,7 @@ const PlayerInfo = ({
   landlord,
   displayedPlayer,
   activePlayer,
+  leaderBoard,
 }) => (
   <div className={`${className}${displayedPlayer === activePlayer ? ' active' : ''}`}>
     <p>{playerNum !== null && users[displayedPlayer].user}</p>
@@ -15,6 +16,7 @@ const PlayerInfo = ({
       <img className="num-cards-indicator" src="images/back.svg" alt="card-back" />
       {numOfCards[displayedPlayer]}
     </p>
+    <p>${leaderBoard[displayedPlayer]}</p>
     {landlord !== null && landlord === displayedPlayer && <div className="landlord-indicator">landlord</div>}
   </div>
 );
