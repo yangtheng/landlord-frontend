@@ -7,6 +7,32 @@
   height: 768px;
   border: 1px solid black;
   overflow: hidden;
+
+  .logo-wrapper {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
+    flex-wrap: wrap;
+    width: 120px;
+    height: 120px;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+
+    > span {
+      width: 90%;
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 0.3125rem;
+      font-weight: bold;
+      font-size: 20px;
+      text-align: center;
+    }
+  }
+
+  .logo {
+    width: 80px;
+  }
 }
 
 .my-cards {
@@ -39,7 +65,7 @@
 }
 
 .current-bid {
-  font-family: sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 24px;
   position: absolute;
   top: 170px;
