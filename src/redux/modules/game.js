@@ -104,7 +104,7 @@ export default (state = defaultState, action) => {
               if (i === action.winningPlayer) return score + action.bet * 2;
               return score - action.bet * 2
             } else {
-              if (i === action.winningPlayer) return score + action.bet;
+              if (state.landlord !== action.winningPlayer) return score + action.bet;
               return score - action.bet
             }
           })

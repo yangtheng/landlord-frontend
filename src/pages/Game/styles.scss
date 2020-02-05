@@ -1,3 +1,7 @@
+button {
+  font-size: 20px;
+}
+
 .game-window {
   position: absolute;
   top: 50%;
@@ -174,5 +178,32 @@
   img {
     width: 80px;
     position: relative;
+  }
+}
+
+.leaderboard {
+  font-family: 'Montserrat', sans-serif;
+  width: 40%;
+  height: 50%;
+  position: absolute;
+  z-index: 1;
+  background: white;
+  border: 1px solid gray;
+  padding: 32px;
+  font-size: 32px;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+
+  > h1 {
+    text-align: center;
+    margin-bottom: 32px;
+    letter-spacing: 2px;
+  }
+
+  .user-score {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
   }
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { socket } from '../../socket';
 import PlayerInfo from '../../components/PlayerInfo';
 import CardsOnBoard from '../../components/CardsOnBoard';
+import Leaderboard from '../../components/Leaderboard';
 
 import './styles.scss';
 
@@ -68,6 +69,7 @@ const Game = (props) => {
         <img className="logo" src="images/logo.svg" alt="logo" />
         <span>CASINO</span>
       </div>
+      {endGame && <Leaderboard {...props} />}
       <div className="my-cards" style={{ width: `${myCards.length * 110 - (myCards.length - 1) * 83}px`}}>
         {myCards.map(({ image, type }, i) => (
           <img
