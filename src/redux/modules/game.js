@@ -92,7 +92,10 @@ export default (state = defaultState, action) => {
             if (i === action.playerNum) return action.cards;
             if (i === (action.playerNum + 1) % 3) return [];
             return cards;
-          })
+          }),
+          ...action.bomb && {
+            currentBid: state.currentBid * 2,
+          },
         }
       case REC_END_GAME:
         return {

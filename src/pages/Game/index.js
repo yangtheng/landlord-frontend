@@ -39,6 +39,14 @@ const Game = (props) => {
     }
   };
 
+  const isBomb = cards => {
+    if (cards.length === 4) {
+      return cards.every(card => card.type === cards[0].type)
+    } else if (cards.length === 2) {
+      return cards.every(card => card.type === 'Joker')
+    } else return false;
+  }
+
   const bid = (amount) => {
     socket.emit('reduxActionSent', {
       type: 'game/REC_BID',
@@ -169,6 +177,13 @@ const Game = (props) => {
                       })
                       return include;
                     }),
+                    bomb: isBomb(myCards.filter((card, i) => {
+                      let include = false;
+                      activeCards.forEach(index => {
+                        if (index === i) include = true;
+                      })
+                      return include;
+                    })),
                     roomId,
                   })
 
