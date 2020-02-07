@@ -39,6 +39,8 @@ const Game = (props) => {
     }
   };
 
+  const noCardsOnBoard = (cards) => !cards.filter(el => el.length > 0).length;
+
   const isBomb = cards => {
     if (cards.length === 4) {
       return cards.every(card => card.type === cards[0].type)
@@ -198,7 +200,7 @@ const Game = (props) => {
 
                   setActiveCards([]);
                 }}>Submit</button>
-                <button onClick={() => {
+                {!noCardsOnBoard(cardsOnBoard) && <button onClick={() => {
                   socket.emit('reduxActionSent', {
                     type: 'game/REC_PLAY_CARDS',
                     playerNum,
@@ -207,7 +209,7 @@ const Game = (props) => {
                   })
 
                   setActiveCards([]);
-                }}>Pass</button>
+                }}>Pass</button>}
               </>
           }
       </div>}
