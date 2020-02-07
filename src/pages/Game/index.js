@@ -192,7 +192,7 @@ const Game = (props) => {
                     bomb: beat(
                       getPrevPlayerCards(cardsOnBoard),
                       getActiveCards(myCards),
-                    ),
+                    ).bomb,
                     roomId,
                   })
 
