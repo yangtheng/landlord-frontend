@@ -94,7 +94,7 @@ export default (state = defaultState, action) => {
             return cards;
           }),
           ...action.bomb && {
-            currentBid: state.currentBid * 2,
+            currentBid: state.currentBid * action.bomb * 2,
           },
         }
       case REC_END_GAME:

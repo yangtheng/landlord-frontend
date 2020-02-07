@@ -3,6 +3,7 @@ import { socket } from '../../socket';
 import PlayerInfo from '../../components/PlayerInfo';
 import CardsOnBoard from '../../components/CardsOnBoard';
 import Leaderboard from '../../components/Leaderboard';
+import { beat } from '../../checkCards';
 
 import './styles.scss';
 
@@ -27,6 +28,18 @@ const Game = (props) => {
   } = props;
   const [activeCards, setActiveCards] = useState([]);
   const [cardTypes, setCardTypes] = useState([]);
+
+  const getPrevPlayerCards = (cards) => (cards[(playerNum + 2) % 3].length && cards[(playerNum + 2) % 3]) || (cards[(playerNum + 1) % 3].length && cards[(playerNum + 1) % 3]) || [];
+
+  const getActiveCards = (cards) => {
+    return cards.filter((card, i) => {
+      let include = false;
+      activeCards.forEach(index => {
+        if (index === i) include = true;
+      })
+      return include;
+    })
+  }
 
   const setActiveCard = index => {
     if (activeCards.includes(index)) {
@@ -53,7 +66,7 @@ const Game = (props) => {
     socket.emit('reduxActionSent', {
       type: 'game/REC_BID',
       bid: amount ? amount : null,
-      activePlayer: (playerNum + 1) % 3,
+      activePlayer: (amount === 3 || playersBidded === 2) ? playerNum : (playerNum + 1) % 3,
       playersBidded: playersBidded + 1,
       playerLastBid: amount ? playerNum : null,
       roomId,
@@ -158,7 +171,10 @@ const Game = (props) => {
             :
               <>
                 <button onClick={() => setActiveCards([])}>Clear</button>
-                <button onClick={() => {
+                {beat(
+                  getPrevPlayerCards(cardsOnBoard),
+                  getActiveCards(myCards),
+                ) && <button onClick={() => {
                   const remainingCards = myCards.filter((card , i) => {
                     let include = true;
                     activeCards.forEach(index => {
@@ -172,20 +188,11 @@ const Game = (props) => {
                   socket.emit('reduxActionSent', {
                     type: 'game/REC_PLAY_CARDS',
                     playerNum,
-                    cards: myCards.filter((card, i) => {
-                      let include = false;
-                      activeCards.forEach(index => {
-                        if (index === i) include = true;
-                      })
-                      return include;
-                    }),
-                    bomb: isBomb(myCards.filter((card, i) => {
-                      let include = false;
-                      activeCards.forEach(index => {
-                        if (index === i) include = true;
-                      })
-                      return include;
-                    })),
+                    cards: getActiveCards(myCards),
+                    bomb: beat(
+                      getPrevPlayerCards(cardsOnBoard),
+                      getActiveCards(myCards),
+                    ),
                     roomId,
                   })
 
@@ -199,7 +206,7 @@ const Game = (props) => {
                   }
 
                   setActiveCards([]);
-                }}>Submit</button>
+                }}>Submit</button>}
                 {!noCardsOnBoard(cardsOnBoard) && <button onClick={() => {
                   socket.emit('reduxActionSent', {
                     type: 'game/REC_PLAY_CARDS',
