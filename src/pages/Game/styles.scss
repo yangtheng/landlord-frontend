@@ -22,18 +22,15 @@
     justify-content: center;
     align-content: space-between;
     flex-wrap: wrap;
-    width: 120px;
-    height: 120px;
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
 
     > span {
-      width: 90%;
       font-family: 'Montserrat', sans-serif;
       letter-spacing: 0.3125rem;
       font-weight: bold;
-      font-size: 20px;
+      font-size: 48px;
       text-align: center;
     }
   }

@@ -89,8 +89,7 @@ const Game = (props) => {
   return (
     <div className="game-window">
       <div className="logo-wrapper">
-        <img className="logo" src="images/logo.svg" alt="logo" />
-        <span>CASINO</span>
+        <span>鬥地主</span>
       </div>
       {endGame && <Leaderboard {...props} />}
       <div className="my-cards" style={{ width: `${myCards.length * 110 - (myCards.length - 1) * 83}px`}}>
