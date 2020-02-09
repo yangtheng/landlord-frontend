@@ -4,6 +4,7 @@ import PlayerInfo from '../../components/PlayerInfo';
 import CardsOnBoard from '../../components/CardsOnBoard';
 import Leaderboard from '../../components/Leaderboard';
 import { beat } from '../../checkCards';
+import usePrevious from '../../hooks/usePrevious';
 
 import './styles.scss';
 
@@ -28,6 +29,8 @@ const Game = (props) => {
   } = props;
   const [activeCards, setActiveCards] = useState([]);
   const [cardTypes, setCardTypes] = useState([]);
+
+  const prevLeaderboard = usePrevious(leaderBoard);
 
   const getPrevPlayerCards = (cards) => (cards[(playerNum + 2) % 3].length && cards[(playerNum + 2) % 3]) || (cards[(playerNum + 1) % 3].length && cards[(playerNum + 1) % 3]) || [];
 
@@ -89,9 +92,9 @@ const Game = (props) => {
   return (
     <div className="game-window">
       <div className="logo-wrapper">
-        <span>鬥地主</span>
+        <span>斗地主</span>
       </div>
-      {endGame && <Leaderboard {...props} />}
+      {endGame && <Leaderboard {...props} prevLeaderboard={prevLeaderboard} />}
       <div className="my-cards" style={{ width: `${myCards.length * 110 - (myCards.length - 1) * 83}px`}}>
         {myCards.map(({ image, type }, i) => (
           <img
