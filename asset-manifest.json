@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/landlord-frontend/static/css/main.6c9cf39a.chunk.css",
-    "main.js": "/landlord-frontend/static/js/main.a10a24bf.chunk.js",
-    "main.js.map": "/landlord-frontend/static/js/main.a10a24bf.chunk.js.map",
+    "main.js": "/landlord-frontend/static/js/main.aae19edd.chunk.js",
+    "main.js.map": "/landlord-frontend/static/js/main.aae19edd.chunk.js.map",
     "runtime-main.js": "/landlord-frontend/static/js/runtime-main.628d177a.js",
     "runtime-main.js.map": "/landlord-frontend/static/js/runtime-main.628d177a.js.map",
-    "static/js/2.851a7199.chunk.js": "/landlord-frontend/static/js/2.851a7199.chunk.js",
-    "static/js/2.851a7199.chunk.js.map": "/landlord-frontend/static/js/2.851a7199.chunk.js.map",
+    "static/js/2.ca91d3c5.chunk.js": "/landlord-frontend/static/js/2.ca91d3c5.chunk.js",
+    "static/js/2.ca91d3c5.chunk.js.map": "/landlord-frontend/static/js/2.ca91d3c5.chunk.js.map",
     "index.html": "/landlord-frontend/index.html",
-    "precache-manifest.edc44ec9dde21bb3d3f28f5962d35e9f.js": "/landlord-frontend/precache-manifest.edc44ec9dde21bb3d3f28f5962d35e9f.js",
+    "precache-manifest.3ae05bd27e1acb604f10b837663cd10d.js": "/landlord-frontend/precache-manifest.3ae05bd27e1acb604f10b837663cd10d.js",
     "service-worker.js": "/landlord-frontend/service-worker.js",
     "static/css/main.6c9cf39a.chunk.css.map": "/landlord-frontend/static/css/main.6c9cf39a.chunk.css.map",
-    "static/js/2.851a7199.chunk.js.LICENSE": "/landlord-frontend/static/js/2.851a7199.chunk.js.LICENSE"
+    "static/js/2.ca91d3c5.chunk.js.LICENSE": "/landlord-frontend/static/js/2.ca91d3c5.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.628d177a.js",
-    "static/js/2.851a7199.chunk.js",
+    "static/js/2.ca91d3c5.chunk.js",
     "static/css/main.6c9cf39a.chunk.css",
-    "static/js/main.a10a24bf.chunk.js"
+    "static/js/main.aae19edd.chunk.js"
   ]
 }
