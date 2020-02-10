@@ -3,7 +3,9 @@ import { socket } from '../../socket';
 import PlayerInfo from '../../components/PlayerInfo';
 import CardsOnBoard from '../../components/CardsOnBoard';
 import Leaderboard from '../../components/Leaderboard';
+import MyCards from '../../components/MyCards';
 import { beat } from '../../checkCards';
+import usePrevious from '../../hooks/usePrevious';
 
 import './styles.scss';
 
@@ -28,6 +30,8 @@ const Game = (props) => {
   } = props;
   const [activeCards, setActiveCards] = useState([]);
   const [cardTypes, setCardTypes] = useState([]);
+
+  const prevLeaderboard = usePrevious(leaderBoard);
 
   const getPrevPlayerCards = (cards) => (cards[(playerNum + 2) % 3].length && cards[(playerNum + 2) % 3]) || (cards[(playerNum + 1) % 3].length && cards[(playerNum + 1) % 3]) || [];
 
@@ -89,22 +93,10 @@ const Game = (props) => {
   return (
     <div className="game-window">
       <div className="logo-wrapper">
-        <img className="logo" src="images/logo.svg" alt="logo" />
-        <span>CASINO</span>
+        <span>斗地主</span>
       </div>
-      {endGame && <Leaderboard {...props} />}
-      <div className="my-cards" style={{ width: `${myCards.length * 110 - (myCards.length - 1) * 83}px`}}>
-        {myCards.map(({ image, type }, i) => (
-          <img
-            key={image}
-            className={activeCards.includes(i) ? 'selected' : ''}
-            onClick={() => setActiveCard(i)}
-            style={{ left: `${0 - 83 * i}px` }}
-            src={image}
-            alt={type}
-          />
-        ))}
-      </div>
+      {endGame && <Leaderboard {...props} prevLeaderboard={prevLeaderboard} />}
+      <MyCards {...props} activeCards={activeCards} setActiveCard={setActiveCard} />
       <div className="leftovers">
         {leftovers.length ? leftovers.map(({image, type}) => (
           <img

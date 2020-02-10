@@ -1,4 +1,3 @@
-const REQ_CREATE_ROOM = 'roomInfo/REQ_CREATE_ROOM';
 const REC_GET_ROOMS = 'roomInfo/REC_GET_ROOMS';
 
 const defaultState = {
