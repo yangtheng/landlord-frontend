@@ -143,7 +143,7 @@ const getFormat = (input = []) => {
     };
 }
 
-const beat = (oldCards, newCards) => {
+export const beat = (oldCards, newCards) => {
     const {format: newFormat, bombs,valid,maxCard} = getFormat(newCards);
     if(!valid){
         return false;
