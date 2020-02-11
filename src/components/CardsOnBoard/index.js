@@ -12,7 +12,9 @@ const CardsOnBoard = ({
       {cards.map(({ image, type }, i) => (
         <img
           key={image}
-          style={{ left: `${0 - cardGap * i}px` }}
+          style={{
+            left: `${0 - cardGap * i}px`,
+          }}
           src={image}
           alt={type}
         />
