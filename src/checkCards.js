@@ -143,7 +143,7 @@ const getFormat = (input = []) => {
     };
 }
 
-export const beat = (oldCards, newCards) => {
+const beat = (oldCards, newCards) => {
     const {format: newFormat, bombs,valid,maxCard} = getFormat(newCards);
     if(!valid){
         return false;
@@ -153,7 +153,7 @@ export const beat = (oldCards, newCards) => {
         bombs
       }
     }
-    const {format: oldFormat, maxCard: oldMaxCard} = getFormat(oldCards);
+    const {format: oldFormat, maxCard: oldMaxCard, bombs: oldBombs } = getFormat(oldCards);
     if(bombs === 0){
         if(Object.keys(newFormat).length !== Object.keys(oldFormat).length) return false;
         for(const key of Object.keys(newFormat)){
@@ -161,33 +161,32 @@ export const beat = (oldCards, newCards) => {
         }
     }
     // console.log(maxCard, oldMaxCard);
-    if(maxCard <= oldMaxCard) return false;
+    if(maxCard <= oldMaxCard && oldBombs === bombs) return false;
     return {
         bombs
     }
 }
 
-console.log(beat(
-[
-
-],
-[
-  {
-    type: 'A',
-    suit: 'black'
-  },
+// console.log(beat(
+// [
+//   {
+//     type: '2',
+//     suit: 'black'
+//   },
+// ],
+// [
   // {
-  //   type: 'Q',
+  //   type: 'A',
   //   suit: 'black'
   // },
   // {
   //   type: 'Q',
   //   suit: 'black'
   // },
-  {
-    type: '2',
-    suit: 'black'
-  },
+  // {
+  //   type: 'Q',
+  //   suit: 'black'
+  // },
   // {
   //   type: 'J',
   //   suit: 'black'
@@ -196,20 +195,20 @@ console.log(beat(
   //   type: 'J',
   //   suit: 'black'
   // },
-  {
-    type: '8',
-    suit: 'black'
-  },
-  {
-    type: '8',
-    suit: 'black'
-  },
-  {
-    type: '8',
-    suit: 'black'
-  },
-  {
-    type: '8',
-    suit: 'black'
-  },
-]));
+//   {
+//     type: '8',
+//     suit: 'black'
+//   },
+//   {
+//     type: '8',
+//     suit: 'black'
+//   },
+//   {
+//     type: '8',
+//     suit: 'black'
+//   },
+//   {
+//     type: '8',
+//     suit: 'black'
+//   },
+// ]));
